@@ -34,7 +34,7 @@ void alertInCelcius(float farenheit) {
 
 void checkTotalFailures()
 {
-   ssert(alertFailureCount==1);
+    assert(alertFailureCount==1);
     std::cout << alertFailureCount << " alerts failed.\n";
     std::cout << "All is well (maybe!)\n";  
 }
