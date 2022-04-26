@@ -42,5 +42,6 @@ void checkTotalFailures()
 int main() {
     alertInCelcius(400.5);
     alertInCelcius(303.6);
+    checkTotalFailures();
     return 0;
 }
