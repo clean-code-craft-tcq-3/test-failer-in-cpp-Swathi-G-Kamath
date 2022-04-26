@@ -27,7 +27,6 @@ void alertInCelcius(float farenheit) {
     
     float celcius = convertFarenehitToCelcius(farenheit);
     int returnCode = networkAlertStub(celcius);
-    std::cout<<"Return code is"<<returnCode<<"\n";
     if (returnCode != 200) {
         alertFailureCount ++;
     }
@@ -36,7 +35,7 @@ void alertInCelcius(float farenheit) {
 void checkTotalFailures()
 {
     checkTotalFailures();
-    assert(alertFailureCount==1);
+    assert(alertFailureCount==0);
     std::cout << alertFailureCount << " alerts failed.\n";
     std::cout << "All is well (maybe!)\n";
 }
