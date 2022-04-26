@@ -3,10 +3,10 @@
 
 void checkPairNumberValidity(int pair_no)
 {
-    assert(1<=pair_no<=25)
+    assert(pair_no>=1 && pair_no<=25);
 }
 
-void displayColourNumber(int x, int y)
+void displayPairNumber(int x, int y)
 {
     int pair_number = x * 5 + y;
     std::cout<<pair_number+1;   //Pair numbers should start from 1
@@ -33,7 +33,7 @@ int printColorMap() {
 }
 
 int main() {
-    int result = printColorMap();
+    printColorMap();
     std::cout << "All is well (maybe!)\n";
     return 0;
 }
