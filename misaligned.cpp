@@ -1,39 +1,63 @@
 #include <iostream>
 #include <assert.h>
+#include <map>
 
-void checkPairNumberValidity(int pair_no)
+const char* majorColor[] = { "White", "Red", "Black", "Yellow", "Violet" };
+const char* minorColor[] = { "Blue", "Orange", "Green", "Brown", "Slate" };
+
+int calculatePairNo(int majorIndex, int minorIndex)
 {
-    assert(pair_no>=1 && pair_no<=25);
+    return ((majorIndex * 5 + minorIndex) + 1); 
 }
 
-void displayPairNumber(int x, int y)
+std::string createColorPair(int majorIndex, int minorIndex)
 {
-    int pair_number = x * 5 + y;
-    std::cout<<pair_number+1;   //Pair numbers should start from 1
-    checkPairNumberValidity(pair_number);
+    std::string majorColorName(majorColor[majorIndex]);
+    std::string minorColorName(minorColor[minorIndex]);
+    return majorColorName.append(" | ").append(minorColorName);
 }
 
-
-void displayColourPair(int major, int minor)
+int getPairNumber(int majorIndex, int minorIndex, std::map<int, std::string>& ColorPairs)
 {
-    const char* majorColor[] = { "White", "Red", "Black", "Yellow", "Violet" };
-    const char* minorColor[] = { "Blue", "Orange", "Green", "Brown", "Slate" };
-    std::cout << "|" << majorColor[major] <<"|"<<minorColor[minor]<<"\n";
+    int pair_no = calculatePairNo(majorIndex, minorIndex);
+    std::string colorPair = createColorPair(majorIndex, minorIndex);
+    ColorPairs[pair_no] = colorPair;
+    return pair_no;
 }
 
-int printColorMap() {
-    int i , j = 0;
-    for(i = 0; i < 5; i++) {
-        for(j = 0; j < 5; j++) {
-            displayPairNumber(i, j);
-            displayColourPair(i, j);
+void printColorCode(int majorIndex, int minorIndex, std::map<int, std::string>& ColorPairs)
+{
+    int pair_no = getPairNumber(majorIndex, minorIndex, ColorPairs);
+    std::cout << pair_no << " | " << ColorPairs[pair_no] << "\n";
+}
+
+int printColorMap(std::map<int, std::string>& ColorPairs) {
+    int i = 0, j = 0;
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 5; j++) {
+            printColorCode(i, j, ColorPairs);
         }
     }
     return i * j;
 }
+void testPrintColorMap(std::map<int, std::string>& ColorPairs)
+{
+    int result = printColorMap(ColorPairs);
+    assert(ColorPairs[1] == "White | Blue");
+    assert(ColorPairs[25] == "Violet | Slate");
+    assert(result == 25);
+}
 
+void testUpdateColorCoderMap(std::map<int, std::string>& colorCodedList)
+{
+    int pairNumber = getPairNumber(0, 0, colorCodedList);
+    assert(pairNumber == 1);
+    assert(colorCodedList[1] == "White | Blue");
+}
 int main() {
-    printColorMap();
-    std::cout << "All is well (maybe!)\n";
+    std::map<int, std::string> colorCoderList;
+    testPrintColorMap(colorCoderList);
+    std::map<int, std::string> testColorCoderList;
+    testUpdateColorCoderMap(testColorCoderList);
     return 0;
 }
