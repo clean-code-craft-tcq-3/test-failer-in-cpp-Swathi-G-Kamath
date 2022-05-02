@@ -1,47 +1,60 @@
 #include <iostream>
 #include <assert.h>
 
-
 int alertFailureCount = 0;
-int temperature_thresh= 200.0;
+#define TEMPTHRESHOLD 200.0
+#define SUCCESS 200
+#define FAILURE 500
 
-int networkAlertStub(float celcius) {
+int testNetworkAlertStub(float celcius)
+{
     std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
-    if(celcius>temperature_thresh)
-     {
-        return 500;
-     }
-    else
-    {        
-        return 200;
+    if (celcius > TEMPTHRESHOLD)
+    {
+        return FAILURE;
     }
-        
+    else
+    {
+        return SUCCESS;
+    }
+}
+
+int testProductionAlertStub(float celcius)
+{
+    std::cout << "ALERT: Temperature is " << celcius << " celcius.\n";
+    // Threshold needs to be defined for production environment, currently returning SUCCESS in all cases.
+    return SUCCESS;
 }
 
 float convertFarenehitToCelcius(float f)
 {
-    return((f-32)*5/9);
+    return((f - 32) * 5 / 9);
 }
 
-void alertInCelcius(float farenheit) {
-    
+void alertInCelcius(const char* env, float farenheit)
+{
+    int returnCode;
     float celcius = convertFarenehitToCelcius(farenheit);
-    int returnCode = networkAlertStub(celcius);
-    if (returnCode != 200) {
-        alertFailureCount +=0;
+    if (env == "Test environment")
+        returnCode = testNetworkAlertStub(celcius);
+    else if (env == "Production environment")
+        returnCode = testProductionAlertStub(celcius);
+    if (returnCode == FAILURE)
+    {
+        alertFailureCount += 1;
     }
 }
 
 void checkTotalFailures()
 {
-    assert(alertFailureCount==1);
+    assert(alertFailureCount == 1);
     std::cout << alertFailureCount << " alerts failed.\n";
-    std::cout << "All is well (maybe!)\n";  
 }
 
 int main() {
-    alertInCelcius(400.5);
-    alertInCelcius(303.6);
+    alertInCelcius("Production environment", 400.5);
+    alertInCelcius("Test environment", 403.6);
     checkTotalFailures();
     return 0;
 }
+
