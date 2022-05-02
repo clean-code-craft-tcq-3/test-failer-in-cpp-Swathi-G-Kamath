@@ -1,4 +1,4 @@
-#include "tshirts.hpp"
+#include "tshirts_test.hpp"
 #include <assert.h>
 
 void checkTshirtsSize()
