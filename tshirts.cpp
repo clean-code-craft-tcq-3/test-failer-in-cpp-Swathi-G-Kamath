@@ -1,7 +1,7 @@
 #include <iostream>
 #include <assert.h>
-#include <tshirts.hpp>
-#include <tshirts_test.hpp>
+#include "tshirts.hpp"
+#include "tshirts_test.hpp"
 
 char size(int cms) {
     char sizeName = '\0';
