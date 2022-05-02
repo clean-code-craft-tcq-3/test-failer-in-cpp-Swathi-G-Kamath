@@ -34,10 +34,11 @@ float convertFarenehitToCelcius(float f)
 void alertInCelcius(const char* env, float farenheit)
 {
     int returnCode;
+    std::string environment=std::to_string(env);
     float celcius = convertFarenehitToCelcius(farenheit);
-    if (env == "Test environment")
+    if (environment == "Test environment")
         returnCode = testNetworkAlertStub(celcius);
-    else if (env == "Production environment")
+    else if (environment == "Production environment")
         returnCode = testProductionAlertStub(celcius);
     if (returnCode == FAILURE)
     {
