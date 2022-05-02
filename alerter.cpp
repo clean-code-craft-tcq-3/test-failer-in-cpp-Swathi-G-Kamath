@@ -1,5 +1,6 @@
 #include <iostream>
 #include <assert.h>
+#include <string>
 
 int alertFailureCount = 0;
 #define TEMPTHRESHOLD 200.0
