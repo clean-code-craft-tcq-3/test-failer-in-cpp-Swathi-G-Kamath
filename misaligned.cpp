@@ -28,7 +28,10 @@ int getPairNumber(int majorIndex, int minorIndex, std::map<int, std::string>& Co
 void printColorCode(int majorIndex, int minorIndex, std::map<int, std::string>& ColorPairs)
 {
     int pair_no = getPairNumber(majorIndex, minorIndex, ColorPairs);
-    std::cout << pair_no << " | " << ColorPairs[pair_no] << "\n";
+    if(pair_no>0 && pair_no<10)
+    std::cout << pair_no<< "  | "<<ColorPairs[pair_no] << "\n";
+    else
+    std::cout << pair_no<< " | "<<ColorPairs[pair_no] << "\n";
 }
 
 int printColorMap(std::map<int, std::string>& ColorPairs) {
